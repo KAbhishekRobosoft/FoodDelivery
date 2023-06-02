@@ -26,7 +26,11 @@ public class RatingServiceImpl implements RatingService {
 
         List<Rating> ratings= ratingRepo.findByRestuarantId(rating.getRestuarantid());
         if(ratings.isEmpty()){
-            throw new GlobalException("no");
+            Restuarant restuarant= restuarantRepository.findById(rating.getRestuarantid()).get();
+            sum= (restuarant.getRating() + rating.getRating()) / 2;
+            restuarant.setRating(sum);
+            restuarantRepository.save(restuarant);
+            return ratingRepo.save(rating);
         }
         else{
             for(int i=0;i<ratings.size();i++){
