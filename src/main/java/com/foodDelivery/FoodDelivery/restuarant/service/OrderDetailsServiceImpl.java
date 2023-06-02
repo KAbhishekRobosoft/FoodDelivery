@@ -1,8 +1,10 @@
 package com.foodDelivery.FoodDelivery.restuarant.service;
 
 
+import com.foodDelivery.FoodDelivery.restuarant.entity.Cart;
 import com.foodDelivery.FoodDelivery.restuarant.entity.OrderDetails;
 import com.foodDelivery.FoodDelivery.restuarant.exception.GlobalException;
+import com.foodDelivery.FoodDelivery.restuarant.repository.CartRepository;
 import com.foodDelivery.FoodDelivery.restuarant.repository.OrderDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,19 +20,23 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     @Autowired
     OrderDetailsRepository orderDetailsRepo;
 
+    @Autowired
+    CartRepository cartRepo;
+
     @Override
     public OrderDetails placeOrder(OrderDetails orderDetails) throws GlobalException {
         Optional<OrderDetails> orderDetailsInfo = orderDetailsRepo.findByCartid(orderDetails.getCartid());
         if(orderDetailsInfo.isPresent() && Objects.equals(orderDetailsInfo.get().getOrderStatus(), "active")){
             throw new GlobalException("Order already present");
         }
-        if(orderDetailsInfo.isPresent()) {
-            orderDetails.setOrderDate(LocalDateTime.now().toString());
-            orderDetails.setOrderStatus("active");
-            return orderDetailsRepo.save(orderDetails);
-        }
 
-        throw new GlobalException("Enter proper cart id");
+            Optional<Cart> cart= cartRepo.findById(orderDetails.getCartid());
+            if(cart.isPresent()) {
+                orderDetails.setOrderDate(LocalDateTime.now().toString());
+                orderDetails.setOrderStatus("active");
+                return orderDetailsRepo.save(orderDetails);
+            }
+        throw new GlobalException("Mentioned cart not present");
     }
 
     @Override
