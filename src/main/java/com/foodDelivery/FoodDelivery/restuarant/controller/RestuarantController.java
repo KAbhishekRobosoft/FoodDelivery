@@ -50,6 +50,7 @@ public class RestuarantController {
 
     @GetMapping("{id}/get")
     public ResponseEntity<?> getRestuarantById(@RequestHeader("Authorization") String token, @PathVariable Integer id) throws GlobalException {
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(restService.getRestuarantById(id).get());
@@ -59,6 +60,7 @@ public class RestuarantController {
 
     @GetMapping("/filterBy/{keyword}")
     public ResponseEntity<?> getAllRestuarants(@RequestHeader("Authorization") String token,@PathVariable String keyword) throws GlobalException {
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(restService.getAllRestuarants(keyword));
@@ -68,6 +70,7 @@ public class RestuarantController {
 
     @GetMapping("/filterByParameters")
     public ResponseEntity<?> getAllRestuarantsByParameters(@RequestHeader("Authorization") String token,RestuarantPage restuarantPage, RestuarantSearchCriteria restuarantSearchCriteria) throws GlobalException{
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(restuarantCriteriaService.getAllRestuarantsByParameters(restuarantPage, restuarantSearchCriteria));

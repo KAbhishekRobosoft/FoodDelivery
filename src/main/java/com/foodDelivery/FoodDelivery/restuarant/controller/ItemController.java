@@ -30,6 +30,7 @@ public class ItemController {
 
     @GetMapping("/{id}/get")
     public ResponseEntity<?> findItemById(@RequestHeader("Authorization") String token, @PathVariable Integer id) throws GlobalException{
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(itemService.findItemById(id));

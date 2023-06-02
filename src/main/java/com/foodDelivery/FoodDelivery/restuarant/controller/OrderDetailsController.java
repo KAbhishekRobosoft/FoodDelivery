@@ -23,6 +23,7 @@ public class OrderDetailsController {
 
     @PostMapping("/placeOrder")
     public ResponseEntity<?> placeOrder(@RequestHeader("Authorization") String token, @RequestBody OrderDetails orderDetails){
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(orderDetailsService.placeOrder(orderDetails));
@@ -33,6 +34,7 @@ public class OrderDetailsController {
 
     @PutMapping("/admin/{orderId}/update")
     public ResponseEntity<?> changeStatus(@RequestHeader("Authorization") String token, @PathVariable Integer orderId){
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(orderDetailsService.changeStatus(orderId));

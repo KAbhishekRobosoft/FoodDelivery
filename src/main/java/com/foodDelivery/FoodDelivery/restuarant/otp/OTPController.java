@@ -29,6 +29,7 @@ public class OTPController {
     @GetMapping("/generateOtp")
     public ResponseEntity<?> generateOTP(@RequestHeader("Authorization") String token,@RequestBody OTPRequest request) throws MessagingException {
         Optional<User> user= userRepo.findByEmail(request.getEmail());
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             if (user.isPresent()) {
@@ -47,6 +48,7 @@ public class OTPController {
         final String SUCCESS = "Entered Otp is valid";
         final String FAIL = "Entered Otp is NOT valid. Please Retry!";
         Optional<User> user = userRepo.findByEmail(request.getEmail());
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             if (user.isPresent()) {

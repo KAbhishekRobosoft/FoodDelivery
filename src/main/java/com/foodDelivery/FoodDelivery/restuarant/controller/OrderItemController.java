@@ -27,6 +27,7 @@ public class OrderItemController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addOrderItem(@RequestHeader("Authorization") String token, @RequestBody @Valid OrderItemRequest request) throws GlobalException{
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(orderItemService.addOrderItem(request));
@@ -36,6 +37,7 @@ public class OrderItemController {
 
     @PutMapping("/decreaseQuantity")
     public ResponseEntity<?> decreaseQuantity(@RequestHeader("Authorization") String token,@RequestBody @Valid OrderItem orderItem) throws GlobalException{
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(orderItemService.decreaseQuantity(orderItem));

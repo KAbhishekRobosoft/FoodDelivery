@@ -25,6 +25,7 @@ public class CartController {
 
     @DeleteMapping("/{cartId}/deleteById")
     public ResponseEntity<?> deleteCartById(@RequestHeader("Authorization") String token, @PathVariable Integer cartId) throws GlobalException{
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(cartService.deleteCartById(cartId));
@@ -34,6 +35,7 @@ public class CartController {
 
     @DeleteMapping("/{cartId}/deleteAllOrderItems")
     public ResponseEntity<?> deleteAllOrderItems(@RequestHeader("Authorization") String token,@PathVariable Integer cartId) throws GlobalException{
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(cartService.deleteAllOrderItems(cartId));
@@ -43,6 +45,7 @@ public class CartController {
 
     @GetMapping("/{cartId}/getById")
     public ResponseEntity<?> getCartById(@RequestHeader("Authorization") String token,@PathVariable Integer cartId) throws GlobalException{
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(cartService.getCartById(cartId));
@@ -62,6 +65,7 @@ public class CartController {
 
     @GetMapping("/{userId}/getAllByUserId")
     public ResponseEntity<?> getAllByUserId(@RequestHeader("Authorization") String token,@PathVariable Integer userId) throws GlobalException{
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(cartService.getAllByUserId(userId));

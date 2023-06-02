@@ -26,6 +26,7 @@ public class RatingController {
 
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestHeader("Authorization") String token, @RequestBody @Valid Rating rating) throws GlobalException {
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             return ResponseEntity.ok(ratingService.add(rating));
