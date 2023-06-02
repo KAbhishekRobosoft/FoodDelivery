@@ -87,6 +87,11 @@ public class RestuarantCriteriaRepository {
         if(restuarantSearchCriteria.getDeliverytime() != 0){
             predicates.add(criteriaBuilder.lessThanOrEqualTo(restuarantRoot.get("deliverytime"),restuarantSearchCriteria.getDeliverytime()));
         }
+
+        if(Objects.nonNull(restuarantSearchCriteria.getBestFor())){
+            predicates.add(criteriaBuilder.like(restuarantRoot.get("bestFor"), "%" + restuarantSearchCriteria.getBestFor() + "%")
+            );
+        }
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 

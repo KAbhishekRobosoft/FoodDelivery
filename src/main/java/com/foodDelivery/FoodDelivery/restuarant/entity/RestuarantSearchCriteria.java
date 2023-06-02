@@ -9,6 +9,16 @@ public class RestuarantSearchCriteria {
     private float minCost;
     private int deliverytime;
 
+    public String getBestFor() {
+        return bestFor;
+    }
+
+    public void setBestFor(String bestFor) {
+        this.bestFor = bestFor;
+    }
+
+    private String bestFor;
+
     public int getDeliverytime() {
         return deliverytime;
     }
