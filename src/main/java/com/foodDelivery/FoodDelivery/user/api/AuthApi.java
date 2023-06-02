@@ -129,10 +129,11 @@ public class AuthApi {
 
     @PostMapping("/resetPassword")
     public ResponseEntity<?> resetPassword(@RequestHeader("Authorization") String token,@RequestBody ResetPasswordRequest request) {
-        Optional<Token> getToken= tokenRepo.findByToken(token);
+        token = token.split(" ")[1];
+        Optional<Token> presentToken= tokenRepo.findByToken(token);
         Optional<User> userInfo = repo.findByEmail(request.getEmail());
 
-        if(getToken.isPresent()) {
+        if(presentToken.isPresent()) {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (userInfo.isPresent()) {
                 userInfo.get().setPassword(passwordEncoder.encode(request.getNewPassword()));
@@ -149,6 +150,7 @@ public class AuthApi {
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader("Authorization") String token,@RequestParam("email") String email) {
         Optional<User> userInfo = repo.findByEmail(email);
+        token = token.split(" ")[1];
         Optional<Token> presentToken= tokenRepo.findByToken(token);
         if(presentToken.isPresent()) {
             if (userInfo.isPresent()) {
