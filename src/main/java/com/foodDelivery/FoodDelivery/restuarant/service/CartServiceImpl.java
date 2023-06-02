@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public String deleteAllOrderItems(Integer cartId) throws GlobalException{
-        orderItemRepo.deleteAllByCartid(cartId);
+        orderItemRepo.deleteAllByCartId(cartId);
         billRepo.deleteByCartId(cartId);
         return "All Items deleted from the cart";
     }
