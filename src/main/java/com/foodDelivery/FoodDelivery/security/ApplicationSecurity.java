@@ -47,7 +47,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
                     ex.getMessage());
         });
-        http.authorizeRequests().antMatchers("/login","/register","/refreshToken","/restuarant/admin/*","/restuarant/admin/**","/item/admin/*","/image/**","/orderDetails/admin/**","/cart/admin/*","/cart/admin/**").permitAll()
+        http.authorizeRequests().antMatchers("/login","/register","/refreshToken","/restuarant/admin/*","/restuarant/admin/**","/item/admin/*","/image/**","/orderDetails/admin/**","/cart/admin/*","/cart/admin/**","/item/admin/**").permitAll()
                 .anyRequest().authenticated();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
