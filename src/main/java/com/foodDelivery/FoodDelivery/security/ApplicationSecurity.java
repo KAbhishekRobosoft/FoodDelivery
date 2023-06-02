@@ -24,14 +24,10 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserRepository userRepo;
 
-    private final LogoutHandler logoutHandler;
-
     @Autowired
     private JwtTokenFilter jwtTokenFilter;
 
-    public ApplicationSecurity(LogoutHandler logoutHandler) {
-        this.logoutHandler = logoutHandler;
-    }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
