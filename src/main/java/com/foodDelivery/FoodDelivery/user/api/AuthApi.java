@@ -53,6 +53,7 @@ public class AuthApi {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationRequest request) {
 
+
         try {
             Authentication authentication = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -65,15 +66,20 @@ public class AuthApi {
             Optional<Token> presentToken= tokenRepo.findByUserId(userData.get().getId());
             if(presentToken.isPresent()){
                 presentToken.get().setToken(accessToken);
+                presentToken.get().setUserid(userData.get().getId());
+                System.out.println(presentToken.get().getToken() + presentToken.get().getUserid());
+                System.out.println(tokenRepo.save(presentToken.get()));
                 tokenRepo.save(presentToken.get());
             }
             else{
                 Token newToken= new Token();
                 newToken.setToken(accessToken);
+                newToken.setUserid(userData.get().getId());
+                System.out.println(tokenRepo.save(newToken));
+                tokenRepo.save(newToken);
             }
             String refreshToken = refreshTokenService.createRefreshToken(user.getId());
             AuthenticationResponse response = new AuthenticationResponse(user.getEmail(),accessToken,refreshToken);
-
             return ResponseEntity.ok().body(response);
 
         } catch (BadCredentialsException ex) {

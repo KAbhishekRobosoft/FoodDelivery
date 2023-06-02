@@ -6,6 +6,8 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class AuthenticationResponse {
     private String email;
     private String accessToken;
