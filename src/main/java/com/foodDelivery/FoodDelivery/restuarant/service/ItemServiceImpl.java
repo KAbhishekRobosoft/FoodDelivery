@@ -53,7 +53,7 @@ public class ItemServiceImpl implements ItemService{
         Optional<Item> item1= itemRepo.findById(item.getId());
         if(item1.isPresent()){
             item.setImage(imageRepo.findByName(item.getName()).get().getUrl());
-            itemRepo.save(item);
+            return itemRepo.save(item);
         }
         throw new GlobalException("Cannot update non-existing data");
     }
