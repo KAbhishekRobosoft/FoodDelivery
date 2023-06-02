@@ -17,11 +17,6 @@ public class OrderDetails {
     private String orderDate;
     private String orderStatus;
 
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cartid",insertable= false,updatable = false)
-    private Cart cart;
-
     private int cartid;
 
     public Integer getOrderId() {
@@ -49,14 +44,6 @@ public class OrderDetails {
     }
 
 
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
     public int getCartid() {
         return cartid;
     }
@@ -67,8 +54,7 @@ public class OrderDetails {
 
 
 
-    public OrderDetails(String orderDate, int cartid) {
-        this.orderDate = orderDate;
+    public OrderDetails(int cartid) {
         this.cartid = cartid;
     }
 

@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface OrderItemRespository extends JpaRepository<OrderItem,Integer> {
     Optional<OrderItem> findByCartId(Integer cartId);
+
     List<OrderItem> findAllByCartId(Integer cartId);
-    public void deleteAllByCartId(Integer cartId);
 }

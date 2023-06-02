@@ -17,15 +17,6 @@ public class Cart {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
-    @JsonIgnore
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public int getUserid() {
         return userid;
     }
@@ -43,10 +34,6 @@ public class Cart {
         OrderItemList = orderItemList;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userid",insertable= false,updatable = false)
-    private User user;
-
     @Column(nullable = false)
     private int userid;
 
@@ -61,10 +48,6 @@ public class Cart {
 
     @OneToOne(mappedBy = "cart",cascade = CascadeType.ALL)
     private  Bill bill;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "restuarantid",insertable= false,updatable = false)
-    private Restuarant restuarant;
 
     @Column(nullable = false)
     private int restuarantid;
@@ -83,15 +66,6 @@ public class Cart {
 
     public void setCartId(Integer id) {
         this.id = id;
-    }
-
-    @JsonIgnore
-    public Restuarant getRestuarant() {
-        return restuarant;
-    }
-
-    public void setRestuarant(Restuarant restuarant) {
-        this.restuarant = restuarant;
     }
 
     public int getRestuarantid() {

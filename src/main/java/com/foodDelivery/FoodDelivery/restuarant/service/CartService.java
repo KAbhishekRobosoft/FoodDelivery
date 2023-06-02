@@ -8,8 +8,6 @@ import java.util.List;
 public interface CartService {
     public Cart deleteCartById(Integer cartId) throws GlobalException;
 
-    public String deleteAllOrderItems(Integer cartId) throws GlobalException;
-
     public Cart getCartById(Integer cartId) throws GlobalException;
 
     public List<Cart> getAllByRestuarantId(Integer restuarantId) throws GlobalException;

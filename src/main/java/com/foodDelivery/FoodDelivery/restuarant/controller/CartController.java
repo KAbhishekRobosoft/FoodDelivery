@@ -33,16 +33,6 @@ public class CartController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-    @DeleteMapping("/{cartId}/deleteAllOrderItems")
-    public ResponseEntity<?> deleteAllOrderItems(@RequestHeader("Authorization") String token,@PathVariable Integer cartId) throws GlobalException{
-        token = token.split(" ")[1];
-        Optional<Token> presentToken= tokenRepo.findByToken(token);
-        if(presentToken.isPresent()) {
-            return ResponseEntity.ok(cartService.deleteAllOrderItems(cartId));
-        }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    }
-
     @GetMapping("/{cartId}/getById")
     public ResponseEntity<?> getCartById(@RequestHeader("Authorization") String token,@PathVariable Integer cartId) throws GlobalException{
         token = token.split(" ")[1];

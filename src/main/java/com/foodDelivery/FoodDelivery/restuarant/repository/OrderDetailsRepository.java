@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface OrderDetailsRepository extends JpaRepository<OrderDetails,Integer> {
 
-    Optional<OrderDetails> findByCartId(Integer cartId);
+    Optional<OrderDetails> findByCartid(Integer cartId);
 }

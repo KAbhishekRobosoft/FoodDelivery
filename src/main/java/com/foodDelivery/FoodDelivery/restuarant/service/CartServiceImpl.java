@@ -1,6 +1,7 @@
 package com.foodDelivery.FoodDelivery.restuarant.service;
 
 import com.foodDelivery.FoodDelivery.restuarant.entity.Cart;
+import com.foodDelivery.FoodDelivery.restuarant.entity.OrderItem;
 import com.foodDelivery.FoodDelivery.restuarant.exception.GlobalException;
 import com.foodDelivery.FoodDelivery.restuarant.repository.BillRepository;
 import com.foodDelivery.FoodDelivery.restuarant.repository.CartRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,17 +30,14 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart deleteCartById(Integer cartId) throws GlobalException {
-        Cart cart= cartRepo.findById(cartId).get();
-        cartRepo.deleteById(cartId);
-        return cart;
+        Optional<Cart> cart = cartRepo.findById(cartId);
+        if(cart.isPresent()) {
+            cartRepo.deleteById(cartId);
+            return cart.get();
+        }
+        throw new GlobalException("Data not present");
     }
 
-    @Override
-    public String deleteAllOrderItems(Integer cartId) throws GlobalException{
-        orderItemRepo.deleteAllByCartId(cartId);
-        billRepo.deleteByCartId(cartId);
-        return "All Items deleted from the cart";
-    }
 
     @Override
     public Cart getCartById(Integer cartId) throws GlobalException{
@@ -51,7 +50,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<Cart> getAllByRestuarantId(Integer restuarantId) throws GlobalException{
-        List<Cart> cart= cartRepo.findAllByRestuarantId(restuarantId);
+        List<Cart> cart= cartRepo.findAllByRestuarantid(restuarantId);
         if(cart.isEmpty())
             throw new GlobalException("Carts does not exist for restuarant id"+" "+restuarantId);
 
@@ -70,7 +69,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<Cart> getAllByUserId(Integer userId) throws GlobalException{
-        List<Cart> carts= cartRepo.findAllByUserId(userId);
+        List<Cart> carts= cartRepo.findAllByUserid(userId);
         if(carts.isEmpty()){
             throw new GlobalException("No carts available");
         }

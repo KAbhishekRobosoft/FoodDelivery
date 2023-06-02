@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,7 +34,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public OrderItem addOrderItem(OrderItemRequest request) throws GlobalException {
-        Optional<Cart> cart = cartRepo.findByRestuarantIdAndUserId(request.getRestuarantId(),request.getUserId());
+        Optional<Cart> cart = cartRepo.findByRestuarantidAndUserid(request.getRestuarantId(),request.getUserId());
 
         String url = imageRepo.findByName(request.getName()).get().getUrl();
 
@@ -86,5 +88,17 @@ public class OrderItemServiceImpl implements OrderItemService {
         }
             orderItemRepo.deleteById(orderItem.getId());
             return orderItemRepo.findById(orderItem.getId()).get();
+    }
+
+    @Override
+    public String deleteAllOrderItems(Integer cartId) throws GlobalException{
+        List<OrderItem> orderItems= orderItemRepo.findAllByCartId(cartId);
+        Bill bill= billRepo.findByCartId(cartId).get();
+        orderItemRepo.deleteAll(orderItems);
+        bill.setTotalcost(0.0);
+        bill.setTotalitem(0);
+        bill.setBilldate(LocalDateTime.now().toString());
+        billRepo.save(bill);
+        return "All Items deleted from the cart";
     }
 }

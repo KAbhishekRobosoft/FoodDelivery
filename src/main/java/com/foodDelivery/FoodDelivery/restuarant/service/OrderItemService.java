@@ -11,5 +11,7 @@ public interface OrderItemService {
 
     public OrderItem decreaseQuantity(OrderItem orderItem) throws GlobalException;
 
+    public String deleteAllOrderItems(Integer cartId) throws GlobalException;
+
 
 }
